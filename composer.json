@@ -1,0 +1,18 @@
+{
+    "name": "regionhalland/tr-print",
+    "type": "wordpress-plugin",
+    "license": "MIT",
+    "description": "Print Terapirekommendationer",
+    "keywords": [],
+    "authors": [
+        {
+            "name": "David Öhlin",
+            "email": "david@digitaliseringsbyran.se"
+        }
+    ],
+    "require": {
+        "philo/laravel-blade": "^3.1",
+        "beberlei/azure-blob-storage": "^1.0",
+        "microsoft/azure-storage-blob": "1.1.0"
+    }
+}
