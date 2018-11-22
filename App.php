@@ -10,9 +10,10 @@ class App
 	public function __construct()
 	{
 		$this->views = __DIR__ . '/src/php/views';
-        $this->cache = wp_upload_dir()['basedir'] . '/cache';
+		$this->cache = wp_upload_dir()['basedir'] . '/cache';
+		$this->blade = new Blade($this->views, $this->cache);
 
-		//add_action( 'admin_enqueue_scripts', array($this, 'enqueue') );
+		add_action( 'admin_enqueue_scripts', array($this, 'enqueue') );
 		add_action( 'admin_menu', array($this, 'createOptionsPage') );
 		add_action( 'admin_post_createPdf', array($this, 'createPdf') );
 	}
@@ -23,8 +24,8 @@ class App
 	 */
 	public function enqueue()
 	{
-		wp_enqueue_script( 'azure-uploads-tab-js', AUT_PLUGIN_URL . '/dist/index.min.js', false, '', true );
-		wp_enqueue_style( 'azure-uploads-tab-css', AUT_PLUGIN_URL . '/dist/index.min.css', false, false, '' );
+		wp_enqueue_script( 'azure-uploads-tab-js', PRINT_TR_PLUGIN_URL . '/dist/index.min.js', false, '', true );
+		wp_enqueue_style( 'azure-uploads-tab-css', PRINT_TR_PLUGIN_URL . '/dist/index.min.css', false, false, '' );
 	}
 
 	/**
@@ -35,7 +36,6 @@ class App
 	{
 		$title = 'Print Terapirekommendationer';
 		$slug = 'print-terapirekommendationer';
-		$sectionId = 'azure_uploads_settings_section';
 
 		// Add options page
 		add_options_page(
@@ -45,60 +45,6 @@ class App
 			$slug, 
 			array($this, 'renderOptionsPage')
 		);
-
-		// Add settings section to the created options page
-		add_settings_section(
-			$sectionId,   
-			'Azure Uploads Options',
-			function() {
-				echo '<p>Fill out the form with your Azure credentials. All fields are required.</p>';
-			},
-			$slug
-	    );
-
-		// Add the tab name field
-	    add_settings_field( 
-			'azure_uploads_tab_name',
-			'Uploads Tab Name',
-			array($this, 'addSettingsFieldCallback'),
-			$slug,
-			$sectionId,
-			array( 'azure_uploads_tab_name' )
-		);
-
-		// Add the settings fields
-	    add_settings_field( 
-			'azure_uploads_account_name',
-			'Azure Account Name',
-			array($this, 'addSettingsFieldCallback'),
-			$slug,
-			$sectionId,
-			array( 'azure_uploads_account_name' )
-		);
-
-		add_settings_field( 
-			'azure_uploads_account_key',
-			'Azure Account Key',
-			array($this, 'addSettingsFieldCallback'),
-			$slug,
-			$sectionId,
-			array( 'azure_uploads_account_key' )
-		);
-
-		add_settings_field( 
-			'azure_uploads_container_name',
-			'Azure Container',
-			array($this, 'addSettingsFieldCallback'),
-			$slug,
-			$sectionId,
-			array( 'azure_uploads_container_name' )
-		);
-
-		// Register the created fields
-		register_setting( $slug, 'azure_uploads_tab_name' );
-		register_setting( $slug, 'azure_uploads_account_name' );
-		register_setting( $slug, 'azure_uploads_account_key' );
-		register_setting( $slug, 'azure_uploads_container_name' );  
 	}
 
 	/**
@@ -106,33 +52,53 @@ class App
 	 * @return void
 	 */
 	public function renderOptionsPage()
-	{ 
-		$blade = new Blade($this->views, $this->cache);
-		$page = $blade->view()->make('settings')->render();
+	{ 	
+		$frontpage = intval(get_option('page_on_front'));
 
-		$pages = get_pages();
+		$pages = get_pages([
+			'sort_order' => 'asc',
+			'sort_column' => 'menu_order',
+			'parent' => $frontpage
+		]);
 
-		//var_dump(self::build($pages));
+		$tree = self::buildTree($pages, $frontpage);
+
+		$page = $this->blade->view()->make('settings', [
+			'tree' => $tree
+		])->render();
+
 
 		echo $page;
 	}
 
 	/**
-	 * Callback to add the settings field
+	 * Creates the PDF File
 	 * @return void
 	 */
-	public function addSettingsFieldCallback($args)
-	{
-		echo '<input type="text" id="' . $args[0] . '" name="' . $args[0] . '" value="' . get_option($args[0]) . '"/>';
-	}
-
 	public function createPdf() {
 		// Throw error if Prince is not installed on the server.
 		if (!file_exists('/usr/bin/prince')) {
-			throw new Exception('Could not find Prince binary. Make sure you installed it on the server. https://www.princexml.com/doc-install/#linux');
+			throw new \Exception('Could not find Prince binary. Make sure you installed it on the server. https://www.princexml.com/doc-install/#linux');
 		}
 
-		$rendered = $this->getChaptersAsHtml();
+		// Throw error if there are no posts.
+		if (!isset($_POST['posts'])){
+			throw new \Exception('No posts selected');
+		}
+
+		$IDs = $_POST['posts'];
+		$pages = [];
+
+    	foreach ($IDs as $ID) {
+    		array_push($pages, get_post($ID));
+    	}
+
+    	$pages = self::sortPages($pages);
+
+    	$rendered = $this->getChaptersAsHtml($pages);
+
+		echo $rendered;
+		die();
 
  		$prince = new PrinceWrapper('/usr/bin/prince');
     	//$prince->addStyleSheet(__DIR__.'/min.css');
@@ -144,82 +110,33 @@ class App
 		$pdf = $prince->convert_string_to_passthru($rendered, $err);
 	}
 
+	private function sortPages($pages) {
+		var_dump($pages);
+	}
+	
+
 	/**
-	 * Echoes the table list view
-	 * @return void
+	 * Returns the chapters as a HTML string
+	 * @return string
+	 * @param array of pages.
 	 */
-	public function render_list_page()
-	{
-		$page_id = 3913;
-    	$page_id_chapter1 = 183;
-    	$chapterOne = get_page($page_id_chapter1);
+	public function getChaptersAsHtml($pages) {
+		$rendered = $this->blade->view()->make('book.book', [
+			'chapters' => $pages
+		])->render();
 
-		$args = array(
-			'sort_order' => 'asc',
-			'sort_column' => 'menu_order',
-			//'child_of' => 0,
-			'parent' => $page_id,
-		);
-		$pages = get_pages($args);
-
-
-
-		$chapters = array();
-
-		foreach ($pages as $key => $value) {
-			if ($key == 2) {
-				array_push($chapters, $value);
-			}
-		}
-
-		foreach ($chapters as $key => $chapter) {
-			$argsTwo = array(
-				'sort_order' => 'asc',
-				'sort_column' => 'menu_order',
-				'parent' => $chapter->ID,
-			);
-			$chapters[$key]->children = get_pages($argsTwo);
-
-		}
-
-	    $this->VIEWS_PATHS = apply_filters('RegionHalland/blade/view_paths', array(
-        	get_stylesheet_directory() . '/views',
-        	get_template_directory() . '/views'
-        ));
-
-		$this->CACHE_PATH = WP_CONTENT_DIR . '/uploads/cache/blade-cache';
-
-        $blade = new Blade($this->VIEWS_PATHS, $this->CACHE_PATH);
-        
-        $rendered = $blade->view()->make('whole-chapter', [
-    		"chapter_one" => $chapterOne,
-    		"chapters" => $chapters
-    	])->render();
-
-
-    	$prince = new PrinceWrapper('/usr/bin/prince');
-    	//$prince->addStyleSheet(__DIR__.'/min.css');
-		$err = [];
-		
-		header('Content-Type: application/pdf');
-		header('Content-Disposition: attachment; filename="foo.pdf"');
-
-		$pdf = $prince->convert_string_to_passthru($rendered, $err);
-
-    	echo $rendered;
-
-		die();
+    	return $rendered;
 	}
 
 	/**
 	 * Returns the chapters as a HTML string
 	 * @return string
 	 */
-	public function getChaptersAsHtml()
+	public function getChaptersAsHtml2()
 	{
 		$page_id = 3913;
     	$page_id_chapter1 = 183;
-    	$chapterOne = get_page($page_id_chapter1);
+    	//$chapterOne = get_page($page_id_chapter1);
 
 		$args = array(
 			'sort_order' => 'asc',
@@ -232,9 +149,9 @@ class App
 		$chapters = array();
 
 		foreach ($pages as $key => $value) {
-			if ($key == 2) {
+			//if ($key == 2) {
 				array_push($chapters, $value);
-			}
+			//}
 		}
 
 		foreach ($chapters as $key => $chapter) {
@@ -247,10 +164,8 @@ class App
 
 		}
 
-        $blade = new Blade($this->views, $this->cache);
-
-        $rendered = $blade->view()->make('book', [
-    		"chapter_one" => $chapterOne,
+        $rendered = $this->blade->view()->make('book.book', [
+    		//"chapter_one" => $chapterOne,
     		"chapters" => $chapters
     	])->render();
 
@@ -263,17 +178,15 @@ class App
      * https://stackoverflow.com/a/28429487
      * @param array $posts     Array of posts.
      * @param int   $parentId  ID of the highest ancestor to build the tree from.
-     * @param int   $currentId ID of the current post.
-     * @param int   $frontpage ID of the sites frontpage.
      * @return array
      */
-    private function build(array &$posts, $parentId = 0) 
+    private function buildTree(array &$posts, $parentId = 0) 
     {
         $branch = array();
 
         foreach ($posts as &$post) {
             if ($post->post_parent == $parentId) {
-                $children = self::build($posts, $post->ID);
+                $children = self::buildTree($posts, $post->ID);
                 if ($children) {
                     $post->children = $children;
                 }

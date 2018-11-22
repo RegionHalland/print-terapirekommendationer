@@ -1,19 +1,16 @@
-import Clipboard from 'clipboard'
+(function($) {
+	var $selectAll = $('.js-select-all')
+	var $chapters = $('.js-checkboxes').find('input[type="checkbox"]')
 
-(function() {
-	
-	if (!Clipboard || !document.querySelector('.aut__copy-btn')) {
-		return
-	}
-	
-	const cb = new Clipboard('.aut__copy-btn')
-
-	cb.on('success', function(e) {
-		e.trigger.innerHTML = 'Kopierad till urklipp!'
-
-		setTimeout(() => {
-			e.trigger.innerHTML = 'Kopiera URL'
-		}, 2000)
+	$selectAll.change(function() {
+		console.log($('.js-checkboxes:checked').length)
+		console.log($('.js-checkboxes').length)
+		$('.js-checkboxes:checked').length <= $('.js-checkboxes').length ?
+			$chapters.prop('checked', true) : $chapters.prop('checked', false)
 	})
 
-})()
+	$chapters.change(function() {
+		$('.js-checkboxes:checked').length === $('.js-checkboxes').length ?
+			$selectAll.prop('checked', true) : $selectAll.prop('checked', false)
+	})
+})(jQuery)
