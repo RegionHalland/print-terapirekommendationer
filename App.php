@@ -9,6 +9,7 @@ class App
 {	
 	public function __construct()
 	{
+		$this->princeBinary = '/usr/bin/prince';
 		$this->views = __DIR__ . '/src/php/views';
 		$this->cache = wp_upload_dir()['basedir'] . '/cache';
 		$this->blade = new Blade($this->views, $this->cache);
@@ -74,7 +75,7 @@ class App
 	 */
 	public function createPdf() {
 		// Throw error if Prince is not installed on the server.
-		if (!file_exists('/usr/bin/prince')) {
+		if (!file_exists($this->princeBinary)) {
 			throw new \Exception('Could not find Prince binary. Make sure you installed it on the server. https://www.princexml.com/doc-install/#linux');
 		}
 
@@ -95,7 +96,7 @@ class App
 
 		$rendered = self::getChaptersAsHtml($chapters);
 
- 		$prince = new PrinceWrapper('/usr/bin/prince');
+ 		$prince = new PrinceWrapper($this->princeBinary);
     	//$prince->addStyleSheet(__DIR__.'/min.css');
 		$err = [];
 		
