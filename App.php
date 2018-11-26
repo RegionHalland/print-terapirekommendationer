@@ -31,8 +31,8 @@ class App
 	 */
 	public function enqueue()
 	{
-		wp_enqueue_script( 'azure-uploads-tab-js', PRINT_TR_PLUGIN_URL . '/dist/index.min.js', false, '', true );
-		wp_enqueue_style( 'azure-uploads-tab-css', PRINT_TR_PLUGIN_URL . '/dist/index.min.css', false, false, '' );
+		wp_enqueue_script( 'print-tr-js', PRINT_TR_PLUGIN_URL . '/dist/js/app.min.js', false, '', true );
+		wp_enqueue_style( 'print-tr-css', PRINT_TR_PLUGIN_URL . '/dist/css/index.min.css', false, false, '' );
 	}
 
 	/**

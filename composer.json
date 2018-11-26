@@ -1,5 +1,5 @@
 {
-    "name": "regionhalland/tr-print",
+    "name": "regionhalland/print-terapirekommendationer",
     "type": "wordpress-plugin",
     "license": "MIT",
     "description": "Print Terapirekommendationer",
@@ -11,8 +11,6 @@
         }
     ],
     "require": {
-        "philo/laravel-blade": "^3.1",
-        "beberlei/azure-blob-storage": "^1.0",
-        "microsoft/azure-storage-blob": "1.1.0"
+        "philo/laravel-blade": "^3.1"
     }
 }

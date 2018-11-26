@@ -1,0 +1,597 @@
+/*
+** Print CSS
+*/
+
+
+//Sets the amount of chapters
+$chapterLength: 26;
+
+//Defines colors for print
+$blue: #004B93;
+$light-blue: #cee2f2;
+
+// Spacing
+$space-1: 2.5mm;
+$space-2: 5mm;
+$space-3: 10mm; 
+$space-4: 20mm;
+
+$space-pt-1: 6pt;
+$space-pt-2: 12pt;
+$space-pt-3: 18pt;
+$space-pt-4: 24pt;
+$space-pt-5: 30pt;
+$space-pt-6: 36pt;
+
+// Typography
+$font-sans: scala-sans, sans;
+$font-serif: TimesNewRoman, "Times New Roman", Times, Georgia, Baskerville, serif;
+
+// Typescale
+$h1: 24pt;
+$h2: 18pt;
+$h3: 14pt;
+$h4: 12pt;
+$h5: 10pt;
+$h6: 10pt;
+// $h5:;
+// $h6:;
+
+@font-face {
+	font-family: 'custom-icon-font';
+	src: url('../fonts/custom-icons.woff') format('woff');
+	font-weight: 700;
+	font-style:  normal;
+}
+
+
+@font-face {
+	font-family: 'scala-sans';
+	src: url('../fonts/scalasans-bold-webfont.woff2') format('woff2'),
+		 url('../fonts/scalasans-bold-webfont.woff') format('woff');
+	font-weight: 700;
+	font-style:  normal;
+}
+
+@font-face {
+	font-family: 'scala-sans';
+	src: url('../fonts/scalasans-bolditalic-webfont.woff2') format('woff2'),
+		 url('../fonts/scalasans-bolditalic-webfont.woff') format('woff');
+	font-weight: 700;
+	font-style:  italic;
+}
+
+@font-face {
+	font-family: 'scala-sans-caps';
+	src: url('../fonts/scalasans-caps-webfont.woff2') format('woff2'),
+		 url('../fonts/scalasans-caps-webfont.woff') format('woff');
+	font-weight: 400;
+	font-style:  normal;
+}
+
+@font-face {
+	font-family: 'scala-sans-caps';
+	src: url('../fonts/scalasans-capsitalic-webfont.woff2') format('woff2'),
+		 url('../fonts/scalasans-capsitalic-webfont.woff') format('woff');
+	font-weight: 400;
+	font-style:  italic;
+}
+
+@font-face {
+	font-family: 'scala-sans';
+	src: url('../fonts/scalasans-italic-webfont.woff2') format('woff2'),
+		 url('../fonts/scalasans-italic-webfont.woff') format('woff');
+	font-weight: 400;
+	font-style:  italic;
+}
+
+@font-face {
+	font-family: 'scala-sans';
+	src: url('../fonts/scalasans-regular-webfont.woff2') format('woff2'),
+		 url('../fonts/scalasans-regular-webfont.woff') format('woff');
+	font-weight: 400;
+	font-style:  normal;
+}
+
+// Normalize
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+menu,
+nav,
+section,
+summary {
+  display: block;
+}
+
+@page { size: A6 }
+@prince-pdf { prince-pdf-page-scaling: none }
+
+@media print {
+	@page coverPage {
+		size: A6;
+		background-image: url('../img/cover-rek-ssk.jpg');
+		background-size: 104%;
+		background-position: center;
+		background-repeat: no-repeat;
+		prince-background-image-resolution: "300dpi";
+	}
+	.cover-page { page: coverPage }
+
+	@page coverPageBack {
+		size: A6;
+		background-image: url('../img/back-rek.jpg');
+		background-size: 102%;
+		background-position: center;
+		background-repeat: no-repeat;
+		prince-background-image-resolution: "300dpi";
+	}
+	.cover-page-back { page: coverPageBack }
+
+	@page {
+		size: A6;
+		prince-bleed: 3mm;
+		marks: crop;
+	}
+	
+	html {
+		box-sizing: border-box;
+	}
+	
+	*, *:before, *:after {
+		box-sizing: inherit;
+	}
+
+	* {
+		margin: 0;
+		padding: 0;
+	}
+
+	body {
+		font-family: $font-serif;
+		line-height: 1;
+		font-size: 8pt;
+
+		// Demonstrate the vertical rhythm at 6pt
+		// background-image: linear-gradient(rgba(255,0,0,0.125) 1pt, transparent 1pt);
+		// background-size: 100% 6pt;
+	}
+
+	h1, h2, h3, h4, h5, h6 {
+		display: block;
+		font-family: $font-sans;
+		-webkit-print-color-adjust: exact;
+		page-break-after: avoid;
+	}
+
+	h1 {
+		font-size: $h1;
+		line-height: 1;
+		margin-bottom: $space-pt-6;
+		column-span: all;
+		page-break-before: always;
+		color: black;
+	}
+
+	h2 {
+		font-size: $h2;
+		line-height: 1;
+		margin-top: 18pt;
+		margin-bottom: $space-pt-1;
+		color: $blue;
+	}
+
+	h3 {
+		font-size: $h3;
+		line-height: 1;
+		margin-top: $space-pt-2;
+		margin-bottom: $space-pt-1;
+		page-break-inside: avoid;
+	}
+
+	h4 {
+		font-size: $h4;
+		margin-top: $space-pt-2;
+		page-break-inside: avoid;
+	}
+
+	h5, h6 {
+		font-size: $h5;
+		margin-top: $space-pt-1;
+		line-height: 1.25;
+		color: $blue;
+		page-break-inside: avoid;
+	}
+	
+	a {
+		word-wrap: break-word;
+	}
+	
+	// Show the actual link
+	// a:link:after, 
+	// a:visited:after { 
+	// 	content: " ("attr(href)")";
+	// }
+
+	p {
+		display: block;
+		font-size: 10pt;
+		line-height: 1.25;
+		margin-bottom: $space-pt-1;
+		hyphens: auto;
+		widows: 3;
+	}
+
+	ul, ol {
+		padding-left: $space-pt-2; 
+		margin-bottom: $space-pt-1;
+
+		ul, ol { margin-bottom: 0 }
+	}
+
+	li {
+		line-height: 1.25;
+	}
+
+	.list {
+		page-break-after: always;
+	}
+
+	table.table thead {
+		display: table-header-group;
+	}
+
+	table {
+		// table-layout: fixed;
+		width: 100%;
+		font-size: 8pt;
+		box-sizing: border-box;
+		border-collapse: collapse;
+		font-family: $font-sans;
+		margin-bottom: $space-pt-1;
+		page-break-inside: avoid;
+		column-span: none;
+
+		// Remove figure tag in tables
+		figure {
+			display: inline-block;
+			width: auto;
+			text-align: inherit;
+			margin-top: 0 !important;
+			margin-bottom: 0 !important;
+			border: 0;
+			
+			img {
+				padding: 0;
+			}
+		}
+
+		img[src*="generiskt-utbyte.svg"],
+		img[src*="kommunalt_lakemedelsforrad.svg"] {
+			display: inline-block;
+			width:      12pt !important;
+			min-width:  12pt !important;
+			max-width:  12pt !important;
+			height:     7pt !important;
+			min-height: 7pt !important;
+			max-height: 7pt !important;
+		}
+	}
+
+	thead,
+	th,
+	.table__header {
+		text-transform: uppercase;
+		background: $blue;
+		letter-spacing: 0.25pt;
+		color: white;
+		text-align: center;
+	}
+
+	.table__subheader {
+		background: $blue !important;
+		font-size: 10pt;
+		color: white;
+		font-weight: 700 !important;
+	}
+
+	tr {
+		width: 100%;
+		box-sizing: border-box;
+		border-collapse: collapse;
+	} 
+	
+	tbody tr:nth-child(odd) {
+		background: #f9f9f9;
+	}
+
+	td {
+		padding: 1pt 1pt;
+		word-wrap: break-word;
+		overflow-wrap: break-word;
+		box-sizing: border-box;
+		border: 0.5pt solid #535353;
+		border-collapse: collapse;
+	}
+	
+	// Override inline styles of tables that tinymce generates.
+	table[style] {
+		width: 100% !important;
+		max-width: 100% !important;
+		height: auto !important;
+	}
+
+	// Can't be 0 and td/tr has no default width value
+	tr[style], 
+	td[style],
+	thead[style],
+	tbody[style] {
+		width:  auto!important;
+		height: auto!important;
+	}
+
+	img {
+		max-width: 100%;
+		height: auto;
+		page-break-inside: avoid;
+	}
+
+	figure {
+		max-width: 100%;
+		height: auto;
+		page-break-inside: avoid;
+		border: 0.5pt solid #535353;
+		margin-bottom: $space-pt-1;
+
+		img {
+			padding: $space-pt-2;
+			max-width:100%;
+			height: auto;
+			page-break-inside: avoid; 
+		}
+
+		figcaption {
+			font-family: $font-sans;
+			font-style: italic;
+			font-size: 8pt;
+			padding: $space-pt-1;
+			border-top: 0.5pt solid #535353;
+			background: $light-blue;
+		}		
+	}
+
+	//Set column-count, inner padding and chapter counter - Needs review
+	.main {
+		column-count: 2;
+		column-gap: 5mm;
+		padding: $space-2;
+		position: relative;
+	}
+
+	//Increments chapter for every chapter section <div class="section"> in document and fetches chapter name from PrinceXML's string-set function
+	.section {
+		counter-increment: chapter;
+		h1 {
+			// string-set: chapterName content();
+			// &::before {
+			// 	content: 'Kapitel ' counter(chapter) ' · '; 
+			// } 
+		}
+	}
+
+	//Styles for chapter marker
+	.chapter-header {
+		flow: static(chapterHeader);
+		content: counter(chapter); 
+		font-size:12pt;
+		font-family: source-sans-pro;
+		text-align: center;
+		padding:0.33em;
+		font-weight:bold;
+		color:white;
+		background-color:$blue;
+	}
+
+	//Adjusts margins for print
+	@page :left {
+		margin: 10mm;
+	}
+	@page :right {
+		margin: 10mm;
+	}
+
+	// Loops through chapters and adds page numbers, chapter title and lastly chapter number 
+	// based on hardcoded chapter-number div
+	@for $i from 1 through $chapterLength {
+		.list:nth-child(#{$chapterLength}n + #{$i}) {
+			page:chapter#{$i};
+		}
+
+		@page chapter#{$i}:left {
+			@bottom-left { 
+				content: counter(page);
+				font-family: $font-sans; 
+				font-size: 8pt;
+				font-weight: bold;
+			}
+			
+			@left-top { 
+				content: element(chapterHeader);
+			}
+		}
+
+		@page chapter#{$i}:right {
+			@bottom-right { 
+				content: counter(page);
+				font-family: $font-sans; 
+				font-size: 8pt;
+				font-weight: bold;
+			}
+			
+			@right-top { 
+				content: element(chapterHeader);
+			}
+		}
+
+		// Adds "generiskt utbyte" icon to the bottom of the page
+		@page chapter#{$i} {
+			@bottom-center {
+				background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 13.36 8.07' fill='%23009640'%3E%3Cpath d='M13.36%2C1.75%2C10.34%2C0V1.25H2.42A2.35%2C2.35%2C0%2C0%2C0%2C.07%2C3.6V5.71l1-.58V3.6A1.34%2C1.34%2C0%2C0%2C1%2C2.42%2C2.25h7.92V3.49Z'/%3E%3Cpath d='M12.29%2C2.94V4.47a1.35%2C1.35%2C0%2C0%2C1-1.35%2C1.35H3V4.58L0%2C6.32%2C3%2C8.07V6.82h7.92a2.35%2C2.35%2C0%2C0%2C0%2C2.35-2.35V2.4Z'/%3E%3C/svg%3E");
+				background-size: 13px 8px;
+				background-repeat: no-repeat;
+				background-position: 43px 15px;
+				font-family: $font-sans;
+				font-size: 6pt;
+				line-height: 1;
+				width: 60%;
+				padding-left: 24px;
+				content: ' = kan bli föremål för utbyte på apotek';
+			}
+		}
+	}
+
+	//Table of contents - Needs review
+	.table-of-contents {
+		font-family: $font-sans;
+		padding: 0;
+		page-break-after: always;
+		list-style:none;
+
+		&__header {
+			color:black;
+		}
+
+		&__chapter, &__subchapter {
+			a {
+				text-decoration: none;
+				color:$blue;
+				content: leader('.') target-counter(attr(href, url), page);
+			}
+		}
+		&__chapter {
+			margin-top:    1mm;
+			margin-bottom: 1mm;
+			list-style: none;
+		}
+		&__subchapter {
+			padding-left:1em;
+			font-size:10pt;
+		}
+	}
+
+	.image--full {
+		padding: 1em;
+		column-span: all;
+		page-break-before: auto;
+		page-break-after: auto; 
+		page-break-inside: avoid;
+		position: relative;
+		display: block;
+		width:100%;
+		background: #eaeaea;
+		height: 500px;
+		-webkit-print-color-adjust: exact;
+	}
+
+	.image--small {
+		height: 400px;
+		-webkit-print-color-adjust: exact; 
+		width: 100%;
+		background:#eaeaea;
+	}
+
+	// Infoboxes
+	.infobox--background,
+	.infobox--border {
+		font-family: $font-sans;
+		display: inline-block;
+		width: 100%;
+		page-break-inside: avoid;
+		padding: $space-pt-2 $space-pt-2 $space-pt-1;
+		margin-bottom: $space-pt-1;
+
+		p, h4, h5, h6 {
+			margin-top: 0;
+		}
+	}
+
+	.infobox--background {
+		background: #ddeef9;
+	}
+
+	.infobox--border {
+		border: 2pt solid #00579d;
+	}
+
+	.infobox--elderly {
+		font-family: $font-sans;
+		background: #f0f4ed;
+		page-break-inside: avoid;
+	
+		.infobox__header {
+			background: #438011;
+			color: #fff;
+		}
+	}
+	
+	.infobox--children {
+		font-family: $font-sans;
+		background: #faf5ea;
+		page-break-inside: avoid;
+	
+		.infobox__header {
+			background: #fdb813;      
+		}
+	}
+	
+	.infobox__header {
+		text-align: center;
+		text-transform: uppercase;
+		font-weight: 700;
+		font-family: $font-sans;
+	}
+	
+	.infobox__content {
+		padding: $space-1;
+	}
+
+	// Utilities
+	.column-span-all  { column-span: all !important;  }
+	.column-span-none { column-span: none !important; }
+
+	.figurecomment { display: none !important; }
+
+	.hide {
+		height: 0;
+		width: 0;
+		opacity: 0;
+		position: absolute;
+	}
+
+}
+
+/* COMPONENTS */
+ul.segment {
+	list-style: none;
+	border:1px solid #eaeaea;
+	padding:0;
+	margin:0;
+	li:first-child{
+		font-family: $font-sans;
+		text-align: center;
+		background:$blue;
+		color:white;
+		text-transform: uppercase;
+		padding:20px;
+		margin:0;
+		font-size:14px;
+	}li{
+		padding-left: 20px;
+	}
+}

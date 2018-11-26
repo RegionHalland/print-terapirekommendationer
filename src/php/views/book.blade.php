@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title></title>
-    <link rel="stylesheet" type="text/css" href="{{ get_stylesheet_directory_uri() }}/assets/dist/css/print.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ PRINT_TR_PLUGIN_URL }}/dist/css/print.min.css">
 </head>
 <body>
     {{-- Cover Page (Empty) --}}

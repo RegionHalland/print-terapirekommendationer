@@ -1,0 +1,736 @@
+/*
+** Print CSS
+*/
+
+
+//Sets the amount of chapters
+$chapterLength: 26;
+
+//Defines colors for print
+$blue: #004B93;
+$light-blue: #cee2f2;
+
+// Spacing
+$space-1: 2.5mm;
+$space-2: 5mm;
+$space-3: 10mm; 
+$space-4: 20mm;
+
+$space-pt-1: 6pt;
+$space-pt-2: 12pt;
+$space-pt-3: 18pt;
+$space-pt-4: 24pt;
+$space-pt-5: 30pt;
+$space-pt-6: 36pt;
+
+// Typography
+$font-sans: scala-sans, sans;
+$font-sans-caps: scala-sans-caps, sans;
+$font-serif: minion-pro, TimesNewRoman, "Times New Roman", Times, Georgia, Baskerville, serif;
+
+// Typescale
+$h1: 24pt;
+$h2: 18pt;
+$h3: 14pt;
+$h4: 12pt;
+$h5: 10pt;
+$h6: 10pt;
+// $h5:;
+// $h6:;
+
+@font-face {
+	font-family: 'scala-sans';
+	src: url('../fonts/scalasans-bold-webfont.woff2') format('woff2'),
+		 url('../fonts/scalasans-bold-webfont.woff') format('woff');
+	font-weight: 700;
+	font-style:  normal;
+}
+
+@font-face {
+ 	font-family: 'scala-sans';
+ 	src: url('../fonts/scalasans-bolditalic-webfont.woff2') format('woff2'),
+ 		 url('../fonts/scalasans-bolditalic-webfont.woff') format('woff');
+ 	font-weight: 700;
+ 	font-style:  italic;
+}
+
+// @font-face {
+// 	font-family: 'scala-sans-caps';
+// 	src: url('../fonts/scalasans-caps-webfont.woff2') format('woff2'),
+// 		 url('../fonts/scalasans-caps-webfont.woff') format('woff');
+// 	font-weight: 400;
+// 	font-style:  normal;
+// }
+
+// @font-face {
+// 	font-family: 'scala-sans-caps';
+// 	src: url('../fonts/scalasans-capsitalic-webfont.woff2') format('woff2'),
+// 		 url('../fonts/scalasans-capsitalic-webfont.woff') format('woff');
+// 	font-weight: 400;
+// 	font-style:  italic;
+// }
+
+@font-face {
+	font-family: 'scala-sans';
+	src: url('../fonts/scalasans-italic-webfont.woff2') format('woff2'),
+		 url('../fonts/scalasans-italic-webfont.woff') format('woff');
+	font-weight: 400;
+	font-style:  italic;
+}
+
+@font-face {
+	font-family: 'scala-sans';
+	src: url('../fonts/scalasans-regular-webfont.woff2') format('woff2'),
+		 url('../fonts/scalasans-regular-webfont.woff') format('woff');
+	font-weight: 400;
+	font-style:  normal;
+}
+
+@font-face {
+    font-family: 'minion-pro';
+    src: url('../fonts/MinionPro-It.woff2') format('woff2'),
+        url('../fonts/MinionPro-It.woff') format('woff');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'minion-pro';
+    src: url('../fonts/MinionPro-BoldIt.woff2') format('woff2'),
+        url('../fonts/MinionPro-BoldIt.woff') format('woff');
+    font-weight: bold;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'minion-pro';
+    src: url('../fonts/MinionPro-Bold.woff2') format('woff2'),
+        url('../fonts/MinionPro-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'minion-pro';
+    src: url('../fonts/MinionPro-Regular.woff2') format('woff2'),
+        url('../fonts/MinionPro-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+// Normalize
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+menu,
+nav,
+section,
+summary {
+  display: block;
+}
+
+@media print {
+
+	@page coverPage {
+		size: A5;
+		background-image: url('../img/cover-smarta.jpg');
+		background-size: 104%;
+		background-position: center;
+		background-repeat: no-repeat;
+		prince-background-image-resolution: "300dpi";
+	}
+	.cover-page { page: coverPage }
+
+	@page coverPageBack {
+		size: A5;
+		background-image: url('../img/back-smarta.jpg');
+		background-size: 102%;
+		background-position: center;
+		background-repeat: no-repeat;
+		prince-background-image-resolution: "300dpi";
+	}
+	.cover-page-back { page: coverPageBack }
+
+	@page notes {
+		size: A5;
+	}
+	.notes { page: notes }
+
+	@page {
+		size: A5;
+		prince-bleed: 3mm;
+		marks: crop;
+	}
+
+	/*@prince-pdf {
+		prince-pdf-page-layout: two-column
+	}*/
+
+	html {
+		box-sizing: border-box;
+	}
+	
+	*, *:before, *:after {
+		box-sizing: inherit;
+	}
+
+	* {
+		margin: 0;
+		padding: 0;
+	}
+
+	body {
+		font-family: $font-serif;
+		line-height: 1;
+		font-size: 10pt;
+
+		// Demonstrate the vertical rhythm at 6pt
+		// background-image: linear-gradient(rgba(255,0,0,0.125) 1pt, transparent 1pt);
+		// background-size: 100% 6pt;
+	}
+
+	h1, h2, h3, h4, h5, h6 {
+		display: block;
+		font-family: $font-sans;
+		-webkit-print-color-adjust: exact;
+		page-break-after: avoid;
+	}
+
+	h1 {
+		font-size: $h1;
+		line-height: 1;
+		margin-bottom: $space-pt-6;
+		column-span: all;
+		page-break-before: always;
+		color: black;
+	}
+
+	h2 {
+		font-size: $h2;
+		line-height: 1;
+		margin-top: 18pt;
+		padding-bottom: $space-pt-1;
+		margin-bottom: $space-pt-2;
+		color: $blue;
+		page-break-inside: avoid;
+		column-span: all;
+		border-bottom: 0.5pt solid #d5d5d5;
+	}
+
+	h3 {
+		font-size: $h3;
+		line-height: 1;
+		margin-top: $space-pt-2;
+		margin-bottom: $space-pt-1;
+		page-break-inside: avoid;
+	}
+
+	h4 {
+		font-size: $h4;
+		margin-top: $space-pt-2;
+		page-break-inside: avoid;
+	}
+
+	h5, h6 {
+		font-size: $h5;
+		margin-top: $space-pt-1;
+		line-height: 1.25;
+		color: $blue;
+		page-break-inside: avoid;
+	}
+	
+	a {
+		color: $blue;
+		word-wrap: break-word;
+	}
+	
+	// Show the actual link
+	// a:link:after, 
+	// a:visited:after { 
+	// 	content: " ("attr(href)")";
+	// }
+
+	p {	
+		font-family: $font-serif;
+		line-height: 1;
+		font-size: 10pt;
+		display: block;
+		text-align: justify;
+		prince-text-justify: auto;
+		font-size: 10pt;
+		line-height: 1.25;
+		margin-bottom: $space-pt-1;
+		hyphens: auto;
+		widows: 3;
+	}
+
+	ul, ol {
+		padding-left: $space-pt-2; 
+		margin-bottom: $space-pt-1;
+
+		ul, ol { margin-bottom: 0 }
+	}
+
+	li {
+		line-height: 1.25;
+	}
+
+	table {
+		// table-layout: auto;
+		// float: bottom;
+		width: 100%;
+		box-sizing: border-box;
+		border-collapse: collapse;
+		font-family: $font-sans;
+		margin-bottom: $space-pt-1;
+		page-break-inside: avoid;
+		column-span: none;
+
+		p {
+			font-family: $font-sans !important;
+		}
+
+		&.column-span-all {
+			margin-top:    $space-pt-2;
+			margin-bottom: $space-pt-2;
+			column-span: all !important;
+			// float: prince-snap;
+		}
+
+		&.column-span-all--no-float { 
+			margin-top:    $space-pt-2;
+			margin-bottom: $space-pt-2;
+			column-span: all !important;
+		}
+
+		// Remove figure tag in tables
+		figure {
+			display: inline-block;
+			width: auto;
+			text-align: inherit;
+			margin-top: 0 !important;
+			margin-bottom: 0 !important;
+			border: 0;
+			
+			img {
+				padding: 0;
+			}
+		}
+
+		img[src*="generiskt-utbyte.svg"],
+		img[src*="kommunalt_lakemedelsforrad.svg"] {
+			display: inline-block;
+			width:      12pt !important;
+			min-width:  12pt !important;
+			max-width:  12pt !important;
+			height:     7pt !important;
+			min-height: 7pt !important;
+			max-height: 7pt !important;
+		}
+	}
+
+	thead,
+	th,
+	.table__header {
+		text-transform: uppercase;
+		background: $blue;
+		letter-spacing: 0.25pt;
+		color: white;
+		font-weight: 700;
+		text-align: center;
+	}
+
+	.table__subheader {
+		background: $light-blue !important;
+		font-weight: 700 !important;
+	}
+
+	tr {
+		width: 100%;
+		box-sizing: border-box;
+		border-collapse: collapse;
+	}
+	
+	tbody tr:nth-child(odd) {
+		background: #f9f9f9;
+	}
+
+	td {
+		padding: 4pt;
+		word-wrap: break-word;
+		overflow-wrap: break-word;
+		box-sizing: border-box;
+		border: 0.5pt solid #535353;
+		border-collapse: collapse;
+	}
+	
+	td[style] {
+		height: auto !important;
+	}
+
+	// Override inline styles of tables that tinymce generates.
+	table[style] {
+		width: 100% !important;
+		max-width: 100% !important;
+		height: auto !important;
+	}
+
+	// Can't be 0 and td/tr has no default width value
+	tr[style], 
+	td[style],
+	thead[style],
+	tbody[style] {
+		width:  auto !important;
+		height: auto !important;
+	}
+
+	img {
+		max-width: 100%;
+		height: auto;
+		page-break-inside: avoid;
+	}
+
+	figure {
+		max-width: 100%;
+		height: auto;
+		page-break-inside: avoid;
+		border: 0.5pt solid #535353;
+		margin-bottom: $space-pt-1;
+
+		img {
+			padding: $space-pt-2;
+			max-width:100%;
+			height: auto;
+			page-break-inside: avoid; 
+		}
+
+		figcaption {
+			font-family: $font-sans;
+			font-style: italic;
+			font-size: 8pt;
+			padding: $space-pt-1;
+			// border-top: 0.5pt solid #535353;
+			// background: $light-blue;
+		}
+
+		&.column-span-all {
+			margin-top:    $space-pt-2;
+			margin-bottom: $space-pt-2;
+			column-span: all !important;
+			// float: prince-snap;
+		}	
+	}
+
+	//Set column-count, inner padding and chapter counter - Needs review
+	.main,
+	.intro {
+		//column-count: 2;
+		//column-gap: 5mm;
+		padding: $space-2;
+		position: relative;
+	}
+
+	//Increments chapter for every chapter section <div class="section"> in document and fetches chapter name from PrinceXML's string-set function
+	.section {
+		counter-increment: chapter;
+		h1 {
+			string-set: chapterName content();
+			// &::before {
+			// 	content: 'Kapitel ' counter(chapter) ' · '; 
+			// } 
+		}
+	}
+
+	// Hide comments
+	.figurecomment {
+		display: none !important;
+	}
+
+	//Styles for chapter marker
+    .chapter-header-left {
+    	float: right;
+    	box-sizing: border-box;
+        flow: static(chapterHeaderLeft);
+        content: counter(chapter);
+        font-size: 12pt;
+        font-family: $font-sans;
+        text-align: right;
+        padding-top: 6pt;
+        padding-bottom: 6pt;
+       	padding-right: 2.25mm;
+        padding-left: 10mm;
+        margin-right: 1mm;
+        font-weight: bold;
+        color: white;
+        background-color: $blue;
+
+    }
+
+    .chapter-header-right {
+    	float: left;
+    	box-sizing: border-box;
+        flow: static(chapterHeaderRight);
+        content: counter(chapter); 
+        font-size: 12pt;
+        font-family: $font-sans;
+        text-align: left;
+        padding-top: 6pt;
+        padding-bottom: 6pt;
+       	padding-left: 2.25mm;
+        padding-right: 10mm;
+        margin-left: 1mm;
+        font-weight: bold;
+        color: white;
+        background-color: $blue;
+    }
+
+	//Adjusts margins for print
+	@page :left {
+		margin: 15mm 25mm 15mm 10mm;
+	}
+	@page :right {
+		margin: 15mm 10mm 15mm 25mm;
+	}
+
+	// Loops through chapters and adds page numbers, chapter title and lastly chapter number 
+	// based on hardcoded chapter-number div
+	@for $i from 1 through $chapterLength {
+		
+		.section:nth-child(#{$chapterLength}n + #{$i}) {
+			page:chapter#{$i};
+		}
+
+		@page chapter#{$i} {
+			@right-top {
+				padding-top:#{$i * 0.25}cm;
+			}
+			@left-top{
+				padding-top:#{$i * 0.25}cm;
+			}
+		}
+
+		@page chapter#{$i}:left {
+			@bottom-left { 
+				content: counter(page); 
+				font-family: $font-sans;
+				font-weight: 400;
+				font-size: 10pt;
+				margin-left: 5mm;
+				margin-bottom: 5mm;
+			}
+
+			@left-top { 
+				content: element(chapterHeaderLeft);
+				padding-right: 1mm;
+			}
+
+			@bottom-right {
+				// content: 'Kapitel ' counter(chapter) ' · ' string(chapterName);
+				content: string(chapterName); 
+				font-family: $font-sans;
+				font-weight: 400;
+				font-size: 10pt;			  
+				margin-right: 5mm;
+				margin-bottom: 5mm;
+			}
+		}
+
+		@page chapter#{$i}:right {
+			@bottom-right {
+				content: counter(page);
+				font-family: $font-sans;
+				font-weight: 400;
+				font-size: 10pt;
+				margin-right: 5mm;
+				margin-bottom: 5mm;
+			}
+
+			@right-top { 
+				content: element(chapterHeaderRight);
+				padding-left: 1mm;
+			}
+
+			@bottom-left {
+				// content: 'Kapitel ' counter(chapter) ' · ' string(chapterName);
+				content: string(chapterName);
+				font-family: $font-sans;
+				font-weight: 400;
+				font-size: 10pt;
+				margin-left: 5mm;
+				margin-bottom: 5mm;
+			}
+		}
+	}
+
+
+	//Table of contents - Needs review
+	.table-of-contents {
+		font-family: $font-sans;
+		padding: 0;
+		margin: 10mm 0mm 0mm 0mm;
+		column-count:2;
+		column-gap: 10mm;
+		page-break-after:always;
+		list-style:none;
+
+		&__header {
+			color: black;
+		}
+
+		&__chapter, &__subchapter {
+			a {
+				text-decoration: none;
+				color: $blue;
+				content: leader('.') target-counter(attr(href, url), page);
+			}
+		}
+
+		&__chapter {
+			font-size: 10pt;
+			margin-top: 2mm;
+			margin-bottom: 2mm;		
+			font-weight: bold;
+			list-style: none;
+			color: $blue;
+		}
+
+		&__subchapter {
+			padding-left: 1em;
+			font-size: 10pt;
+		}
+
+		a:link:after, 
+		a:visited:after { 
+			content: '';
+		}
+	}
+
+	.image--full {
+		padding: 1em;
+		column-span: all;
+		page-break-before: auto;
+		page-break-after: auto; 
+		page-break-inside: avoid;
+		position: relative;
+		display: block;
+		width:100%;
+		background: #eaeaea;
+		height: 500px;
+		-webkit-print-color-adjust: exact;
+	}
+
+	.image--small {
+		height: 400px;
+		-webkit-print-color-adjust: exact; 
+		width: 100%;
+		background: #eaeaea;
+	}
+
+	// Infoboxes
+	.infobox--background,
+	.infobox--border {
+		font-family: $font-sans;
+		display: inline-block;
+		width: 100%;
+		page-break-inside: avoid;
+		padding: $space-pt-2 $space-pt-2 $space-pt-1;
+		margin-bottom: $space-pt-1;
+
+		p, h4, h5, h6 {
+			margin-top: 0;
+		}
+	}
+
+	.infobox--background {
+		background: #ddeef9;
+	}
+
+	.infobox--border {
+		border: 2pt solid #00579d;
+	}
+
+	.infobox--elderly {
+		font-family: $font-sans;
+		background: #f0f4ed;
+		page-break-inside: avoid;
+	
+		.infobox__header {
+			background: #438011;
+			color: #fff;
+		}
+	}
+	
+	.infobox--children {
+		font-family: $font-sans;
+		background: #faf5ea;
+		page-break-inside: avoid;
+	
+		.infobox__header {
+			background: #fdb813;      
+		}
+	}
+	
+	.infobox__header {
+		text-align: center;
+		text-transform: uppercase;
+		font-weight: 700;
+		font-family: $font-sans;
+		padding: 4pt;
+	}
+	
+	.infobox__content {
+		padding: $space-1;
+	}
+
+	// Utilities
+	.column-span-all  { column-span: all !important;  }
+	.column-span-none { column-span: none !important; }
+
+	@page rotate_body { 
+		prince-rotate-body: landscape;
+	}
+
+	.prince-rotate-body {
+		page: rotate_body;
+	}
+
+
+	.figurecomment { display: none !important; }
+	
+	.break-page { page-break-after: always !important; }	
+
+	.hide {
+		height: 0 !important;
+		width: 0 !important;
+		position: absolute;
+		overflow: hide;
+		opacity: 0;
+	}
+}
+
+/* COMPONENTS */
+ul.segment {
+	list-style: none;
+	border:1px solid #eaeaea;
+	padding:0;
+	margin:0;
+	li:first-child{
+		font-family: $font-sans;
+		text-align: center;
+		background:$blue;
+		color:white;
+		text-transform: uppercase;
+		padding:20px;
+		margin:0;
+		font-size:14px;
+	}li{
+		padding-left: 20px;
+	}
+}
