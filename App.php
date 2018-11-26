@@ -12,6 +12,12 @@ class App
 		$this->views = __DIR__ . '/src/php/views';
 		$this->cache = wp_upload_dir()['basedir'] . '/cache';
 		$this->blade = new Blade($this->views, $this->cache);
+		$this->frontpage = intval(get_option('page_on_front'));
+		$this->pages = get_pages([
+			'sort_order' => 'asc',
+			'sort_column' => 'menu_order',
+			'parent' => $this->frontpage
+		]);
 
 		add_action( 'admin_enqueue_scripts', array($this, 'enqueue') );
 		add_action( 'admin_menu', array($this, 'createOptionsPage') );
@@ -52,21 +58,12 @@ class App
 	 * @return void
 	 */
 	public function renderOptionsPage()
-	{ 	
-		$frontpage = intval(get_option('page_on_front'));
-
-		$pages = get_pages([
-			'sort_order' => 'asc',
-			'sort_column' => 'menu_order',
-			'parent' => $frontpage
-		]);
-
-		$tree = self::buildTree($pages, $frontpage);
+	{
+		$tree = self::buildTree($this->pages, $this->frontpage);
 
 		$page = $this->blade->view()->make('settings', [
 			'tree' => $tree
 		])->render();
-
 
 		echo $page;
 	}
@@ -86,19 +83,17 @@ class App
 			throw new \Exception('No posts selected');
 		}
 
-		$IDs = $_POST['posts'];
-		$pages = [];
+		$selectedChapters = $_POST['posts'];
 
-    	foreach ($IDs as $ID) {
-    		array_push($pages, get_post($ID));
-    	}
+		$chapters = array();
 
-    	$pages = self::sortPages($pages);
+		foreach ($this->pages as $key => $value) {
+			if (in_array($value->ID, $selectedChapters)) {
+				array_push($chapters, $value);
+			}
+		}
 
-    	$rendered = $this->getChaptersAsHtml($pages);
-
-		echo $rendered;
-		die();
+		$rendered = self::getChaptersAsHtml($chapters);
 
  		$prince = new PrinceWrapper('/usr/bin/prince');
     	//$prince->addStyleSheet(__DIR__.'/min.css');
@@ -110,68 +105,27 @@ class App
 		$pdf = $prince->convert_string_to_passthru($rendered, $err);
 	}
 
-	private function sortPages($pages) {
-		var_dump($pages);
-	}
-	
-
 	/**
-	 * Returns the chapters as a HTML string
+	 * Returns the chapters with children as a HTML string
 	 * @return string
 	 * @param array of pages.
 	 */
-	public function getChaptersAsHtml($pages) {
-		$rendered = $this->blade->view()->make('book.book', [
-			'chapters' => $pages
-		])->render();
-
-    	return $rendered;
-	}
-
-	/**
-	 * Returns the chapters as a HTML string
-	 * @return string
-	 */
-	public function getChaptersAsHtml2()
-	{
-		$page_id = 3913;
-    	$page_id_chapter1 = 183;
-    	//$chapterOne = get_page($page_id_chapter1);
-
-		$args = array(
-			'sort_order' => 'asc',
-			'sort_column' => 'menu_order',
-			//'child_of' => 0,
-			'parent' => $page_id,
-		);
-		$pages = get_pages($args);
-
-		$chapters = array();
-
-		foreach ($pages as $key => $value) {
-			//if ($key == 2) {
-				array_push($chapters, $value);
-			//}
-		}
-
+	private function getChaptersAsHtml($chapters) {
+		
 		foreach ($chapters as $key => $chapter) {
-			$argsTwo = array(
+			$chapters[$key]->children = get_pages([
 				'sort_order' => 'asc',
 				'sort_column' => 'menu_order',
 				'parent' => $chapter->ID,
-			);
-			$chapters[$key]->children = get_pages($argsTwo);
-
+			]);
 		}
 
-        $rendered = $this->blade->view()->make('book.book', [
-    		//"chapter_one" => $chapterOne,
-    		"chapters" => $chapters
-    	])->render();
+		$rendered = $this->blade->view()->make('book.book', [
+			"chapters" => $chapters
+		])->render();
 
-    	return $rendered;
+		return $rendered;
 	}
-
 
 	/**
      * Builds a tree from a flat array of pages
