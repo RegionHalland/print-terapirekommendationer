@@ -23,7 +23,7 @@ $ sudo apt install gdebi
 
 3. Install the downloaded package using gdebi:
 ```sh
-$ sudo gdebi ~/prince_12.2-1_ubuntu16.04_i386.deb
+$ sudo gdebi ~/prince_12.2-1_ubuntu18.04_amd64.deb
 ```
 
 4. Make sure that PrinceXML is installed. The following command should return a version number and some information about the package:
