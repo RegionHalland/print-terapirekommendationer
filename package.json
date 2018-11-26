@@ -1,14 +1,10 @@
 {
-  "name": "azure-uploads-tab",
+  "name": "print-terapirekommendationer",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "https://github.com/RegionHalland/azure-uploads.git",
+  "repository": "https://github.com/RegionHalland/print-terapirekommendationer",
   "author": "David Öhlin <david@digitaliseringsbyran.se>",
   "license": "MIT",
-  "scripts": {
-    "start": "webpack --watch --mode development",
-    "build": "webpack --mode production"
-  },
   "devDependencies": {
     "autoprefixer": "^7.1.6",
     "babel-core": "^6.26.0",
@@ -25,8 +21,5 @@
     "gulp-shell": "^0.6.3",
     "gulp-uglify": "^3.0.0",
     "gulp-util": "^3.0.8"
-  },
-  "dependencies": {
-    "clipboard": "^2.0.1"
   }
 }
