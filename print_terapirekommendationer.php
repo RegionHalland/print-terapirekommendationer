@@ -12,7 +12,7 @@
 define('PRINT_TR_PLUGIN_NAME', 'Tr Print');
 define('PRINT_TR_PLUGIN_PATH', plugin_dir_path(__FILE__));
 define('PRINT_TR_PLUGIN_URL', plugins_url('', __FILE__));
-define('PRINT_TR_PLUGIN_CACHE_DIR', trailingslashit(wp_upload_dir()['basedir']) . 'cache');
+define('PRINT_TR_PLUGIN_CACHE_DIR', WP_CONTENT_DIR . '/uploads/cache');
 
 if (file_exists(PRINT_TR_PLUGIN_PATH . 'vendor/autoload.php')) {
 	require_once PRINT_TR_PLUGIN_PATH . 'vendor/autoload.php';

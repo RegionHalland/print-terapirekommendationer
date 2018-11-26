@@ -11,7 +11,7 @@ class App
 	{
 		$this->princeBinary = '/usr/bin/prince';
 		$this->views = __DIR__ . '/src/php/views';
-		$this->cache = wp_upload_dir()['basedir'] . '/cache';
+		$this->cache = PRINT_TR_PLUGIN_CACHE_DIR;
 		$this->blade = new Blade($this->views, $this->cache);
 		$this->frontpage = intval(get_option('page_on_front'));
 		$this->pages = get_pages([
