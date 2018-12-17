@@ -431,8 +431,8 @@ summary {
 	//Set column-count, inner padding and chapter counter - Needs review
 	.main,
 	.intro {
-		//column-count: 2;
-		//column-gap: 5mm;
+		column-count: 2;
+		column-gap: 5mm;
 		padding: $space-2;
 		position: relative;
 	}
