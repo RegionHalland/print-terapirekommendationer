@@ -13,11 +13,9 @@
 
     {{-- Foreword --}}
     <main class="main" role="main">
-        <div class="section"">
+        <div>
             <h1>{{$foreword->post_title}}</h1>
             {!! apply_filters('the_content', $foreword->post_content) !!}
-            <div class="chapter-header-left">1</div>
-            <div class="chapter-header-right">1</div>
         </div>
     </main>
     {{-- Foreword END --}}
