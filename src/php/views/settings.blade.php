@@ -1,4 +1,4 @@
-<h1>Terapirekommendationer - Print</h1>
+<h1>Terapirekommendationer - Skapa PDF</h1>
 <hr>
 <strong>
 	<input type="checkbox" name="select_all" id="select_all" class="js-select-all">
@@ -11,5 +11,8 @@
 		@each('tree-child-list', $tree, 'item')
 	</ul>
 	@endif
+	A4 <input type="radio" name="pagesize" value="4" checked>&nbsp;&nbsp;
+	A5 <input type="radio" name="pagesize" value="5">&nbsp;&nbsp;
+	A6 <input type="radio" name="pagesize" value="6"> 
 	{{ submit_button( 'Ladda ner PDF' ) }}
 </form>

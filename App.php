@@ -17,8 +17,10 @@ class App
 		$this->pages = get_pages([
 			'sort_order' => 'asc',
 			'sort_column' => 'menu_order',
-			'parent' => $this->frontpage
+			'parent' => $this->frontpage,
+			'exclude' => array(8694)
 		]);
+		$this->foreword = get_post(8694);
 
 		add_action( 'admin_enqueue_scripts', array($this, 'enqueue') );
 		add_action( 'admin_menu', array($this, 'createOptionsPage') );
@@ -41,7 +43,7 @@ class App
 	 */
 	public function createOptionsPage() 
 	{
-		$title = 'Print Terapirekommendationer';
+		$title = 'Skapa PDF';
 		$slug = 'print-terapirekommendationer';
 
 		// Add options page
@@ -74,9 +76,17 @@ class App
 	 * @return void
 	 */
 	public function createPdf() {
+		
 		// Throw error if Prince is not installed on the server.
 		if (!file_exists($this->princeBinary)) {
 			throw new \Exception('Could not find Prince binary. Make sure you installed it on the server. https://www.princexml.com/doc-install/#linux');
+		}
+
+		// Set size of page - default A4
+		if (!isset($_POST['pagesize'])){
+			$intPagesize = 4;
+		} else {
+			$intPagesize = $_POST['pagesize'];
 		}
 
 		// Throw error if there are no posts.
@@ -94,11 +104,11 @@ class App
 			}
 		}
 
-		$rendered = self::getChaptersAsHtml($chapters);
+		$rendered = self::getChaptersAsHtml($chapters, $intPagesize);
 
  		$prince = new PrinceWrapper($this->princeBinary);
-    	//$prince->addStyleSheet(__DIR__.'/min.css');
-		$err = [];
+    	
+    	$err = [];
 		
 		header('Content-Type: application/pdf');
 		header('Content-Disposition: attachment; filename="tr_' . date("Y-m-d") . '.pdf"');
@@ -111,8 +121,9 @@ class App
 	 * @return string
 	 * @param array of pages.
 	 */
-	private function getChaptersAsHtml($chapters) {
+	private function getChaptersAsHtml($chapters, $intPagesize) {
 		
+		// Get all pages with children
 		foreach ($chapters as $key => $chapter) {
 			$chapters[$key]->children = get_pages([
 				'sort_order' => 'asc',
@@ -121,9 +132,8 @@ class App
 			]);
 		}
 
-		$rendered = $this->blade->view()->make('book.book', [
-			"chapters" => $chapters
-		])->render();
+		// Render all pages with correct size
+		$rendered = $this->blade->view()->make('book.book-'.$intPagesize, ["chapters" => $chapters], ["foreword" => $this->foreword])->render();
 
 		return $rendered;
 	}

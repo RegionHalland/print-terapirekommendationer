@@ -3,12 +3,24 @@
 <head>
     <meta charset="utf-8">
     <title></title>
-    <link rel="stylesheet" type="text/css" href="{{ PRINT_TR_PLUGIN_URL }}/dist/css/print.min.css?ver=2.0">
+    <link rel="stylesheet" type="text/css" href="{{ PRINT_TR_PLUGIN_URL }}/dist/css/print-a6.min.css?ver=1.0">
 </head>
 <body>
+    
     {{-- Cover Page (Empty) --}}
     <div class="cover-page"></div>
     {{-- Cover Page (Empty) END --}}
+
+    {{-- Foreword --}}
+    <main class="main" role="main">
+        <div class="section"">
+            <h1>{{$foreword->post_title}}</h1>
+            {!! apply_filters('the_content', $foreword->post_content) !!}
+            <div class="chapter-header-left">1</div>
+            <div class="chapter-header-right">1</div>
+        </div>
+    </main>
+    {{-- Foreword END --}}
     
     {{-- Table of Contents --}}
     <h2 class="table-of-contents__header">Innehållsförteckning</h2>
