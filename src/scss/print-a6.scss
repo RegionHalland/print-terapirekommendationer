@@ -5,7 +5,6 @@
 
 //Sets the amount of chapters
 $chapterLength: 26;
-$chapterLengthPlusEtt: 27;
 
 //Defines colors for print
 $blue: #004B93;
@@ -408,8 +407,8 @@ summary {
 
 	// Loops through chapters and adds page numbers, chapter title and lastly chapter number 
 	// based on hardcoded chapter-number div
-	@for $i from 1 through $chapterLengthPlusEtt {
-		.list:nth-child(#{$chapterLengthPlusEtt}n + #{$i}) {
+	@for $i from 1 through $chapterLength {
+		.list:nth-child(#{$chapterLength}n + #{$i}) {
 			page:chapter#{$i};
 		}
 
