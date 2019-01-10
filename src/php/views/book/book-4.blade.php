@@ -12,12 +12,10 @@
     {{-- Cover Page (Empty) END --}}
 
     {{-- Foreword --}}
-    <main class="main" role="main">
-        <div class="section"">
-            <h1>{{$foreword->post_title}}</h1>
-            {!! apply_filters('the_content', $foreword->post_content) !!}
-        </div>
-    </main>
+    <div class="cover-page">
+        <h1>{{$foreword->post_title}}</h1>
+        {!! apply_filters('the_content', $foreword->post_content) !!}
+    </div>
     {{-- Foreword END --}}
     
     {{-- Table of Contents --}}
