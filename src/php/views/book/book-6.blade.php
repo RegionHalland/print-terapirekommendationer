@@ -25,7 +25,7 @@
     <ul class="table-of-contents">
         @foreach($chapters as $key => $chapter)
             <?php if (trim($chapter->post_title) != 'Rekommenderade läkemedel') { ?>
-                <li class="table-of-contents__chapter">{{$chapter->post_title}}<a href="#{{$key+1}}"></a></li>
+                <li class="table-of-contents__chapter">{{$chapter->post_name}} - {{$chapter->post_title}}<a href="#{{$key+1}}"></a></li>
             <?php } ?>
             @foreach($chapter->children as $k => $children)
                 <li class="table-of-contents__subchapter">{{$children->post_title}}<a href="#{{$key+1}}.{{$k+1}}"></a></li>
