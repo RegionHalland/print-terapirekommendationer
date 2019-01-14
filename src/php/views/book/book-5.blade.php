@@ -36,12 +36,14 @@
         {{-- Book --}}
         @foreach($chapters as $key=>$chapter)
                 <div class="section" id="{{$key+1}}">
-                    <h1>rollo5{{$chapter->post_title}}</h1>
+                    <h1>{{$chapter->post_title}}</h1>
                     {!! apply_filters('the_content', $chapter->post_content) !!}
                     <div class="chapter-header-left">1</div>
                     <div class="chapter-header-right">1</div>
                     @foreach($chapter->children as $k=>$children)
-                        <h2 id="{{$key+1}}.{{$k+1}}">{{$children->post_title}}</h2>
+                        <?php if ($children->post_title != "Rekommenderade läkemedel") { ?>
+                            <h2 id="{{$key+1}}.{{$k+1}}">{{$children->post_title}}</h2>
+                        <?php } ?>
                         {!! apply_filters('the_content', $children->post_content) !!}
                     @endforeach
                 </div>
