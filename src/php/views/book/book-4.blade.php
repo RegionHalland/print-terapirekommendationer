@@ -24,9 +24,9 @@
     <h2 class="table-of-contents__header">Innehållsförteckning</h2>
     <ul class="table-of-contents">
         @foreach($chapters as $key => $chapter)
-            <li class="table-of-contents__chapter">A - {{$chapter->post_title}}<a href="#{{$key+1}}"></a></li>
+            <li class="table-of-contents__chapter">{{$chapter->post_title}}<a href="#{{$key+1}}"></a></li>
             @foreach($chapter->children as $k => $children)
-                <li class="table-of-contents__subchapter">B - {{$children->post_title}}<a href="#{{$key+1}}.{{$k+1}}"></a></li>
+                <li class="table-of-contents__subchapter">{{$children->post_title}}<a href="#{{$key+1}}.{{$k+1}}"></a></li>
             @endforeach
         @endforeach
     </ul>
@@ -36,7 +36,9 @@
         {{-- Book --}}
         @foreach($chapters as $key=>$chapter)
                 <div class="section" id="{{$key+1}}">
-                    <h1>{{$chapter->post_title}}</h1>
+                    <?php if (trim($chapter->post_title) != 'Rekommenderade läkemedel') { ?>
+                        <h1>{{$chapter->post_title}}</h1>
+                    <?php } ?>
                     {!! apply_filters('the_content', $chapter->post_content) !!}
                     <div class="chapter-header-left">1</div>
                     <div class="chapter-header-right">1</div>
