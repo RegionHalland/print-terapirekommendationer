@@ -36,9 +36,7 @@
         {{-- Book --}}
         @foreach($chapters as $key=>$chapter)
                 <div class="section" id="{{$key+1}}">
-                    <?php if (trim($chapter->post_title) != 'Rekommenderade läkemedel') { ?>
-                        <h1>{{$chapter->post_title}}</h1>
-                    <?php } ?>
+                    <h1>rollo6{{$chapter->post_title}}</h1>
                     {!! apply_filters('the_content', $chapter->post_content) !!}
                     <div class="chapter-header-left">1</div>
                     <div class="chapter-header-right">1</div>
