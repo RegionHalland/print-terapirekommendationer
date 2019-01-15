@@ -41,7 +41,7 @@
                     <div class="chapter-header-left">1</div>
                     <div class="chapter-header-right">1</div>
                     @foreach($chapter->children as $k=>$children)
-                        <?php if ($children->post_title == "Rekommenderade läkemedel") { ?>
+                        <?php if ($children->post_title == "Rekommenderade läkemedel" || $children->post_title == "Rekommenderade omläggningsmaterial") { ?>
                             <h2 class="hide" id="{{$key+1}}.{{$k+1}}">{{$children->post_title}}</h2>
                         <?php } else { ?>
                             <h2 id="{{$key+1}}.{{$k+1}}">{{$children->post_title}}</h2>
