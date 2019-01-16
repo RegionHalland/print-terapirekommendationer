@@ -23,7 +23,6 @@ class App
 		$this->foreword = get_post(8694);
 		$this->ssk = self::getSSK();
 
-
 		add_action( 'admin_enqueue_scripts', array($this, 'enqueue') );
 		add_action( 'admin_menu', array($this, 'createOptionsPage') );
 		add_action( 'admin_post_createPdf', array($this, 'createPdf') );
@@ -45,7 +44,7 @@ class App
 	 */
 	public function createOptionsPage() 
 	{
-		$title = 'Skapa PDF (24)';
+		$title = 'Skapa PDF (25)';
 		$slug = 'print-terapirekommendationer';
 
 		// Add options page
