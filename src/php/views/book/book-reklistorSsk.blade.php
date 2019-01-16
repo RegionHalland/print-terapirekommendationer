@@ -33,7 +33,6 @@
         {{-- Book --}}
         @foreach($chapters as $key => $chapter)
             <div class="list" id="{{$key+1}}">
-                <h1>{{$chapter['Rubrik']}}</h1>
                 {!! apply_filters('the_content', $chapter['Content']) !!}
             </div>
         @endforeach
