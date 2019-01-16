@@ -2,10 +2,6 @@
 ** Print CSS
 */
 
-
-//Sets the amount of chapters
-$chapterLength: 26;
-
 //Defines colors for print
 $blue: #004B93;
 $light-blue: #cee2f2;
@@ -25,8 +21,7 @@ $space-pt-6: 36pt;
 
 // Typography
 $font-sans: scala-sans, sans;
-$font-sans-caps: scala-sans-caps, sans;
-$font-serif: minion-pro, TimesNewRoman, "Times New Roman", Times, Georgia, Baskerville, serif;
+$font-serif: TimesNewRoman, "Times New Roman", Times, Georgia, Baskerville, serif;
 
 // Typescale
 $h1: 24pt;
@@ -35,8 +30,7 @@ $h3: 14pt;
 $h4: 12pt;
 $h5: 10pt;
 $h6: 10pt;
-// $h5:;
-// $h6:;
+$h6: 10pt;
 
 @font-face {
 	font-family: 'scala-sans';
@@ -53,22 +47,6 @@ $h6: 10pt;
  	font-weight: 700;
  	font-style:  italic;
 }
-
-// @font-face {
-// 	font-family: 'scala-sans-caps';
-// 	src: url('../fonts/scalasans-caps-webfont.woff2') format('woff2'),
-// 		 url('../fonts/scalasans-caps-webfont.woff') format('woff');
-// 	font-weight: 400;
-// 	font-style:  normal;
-// }
-
-// @font-face {
-// 	font-family: 'scala-sans-caps';
-// 	src: url('../fonts/scalasans-capsitalic-webfont.woff2') format('woff2'),
-// 		 url('../fonts/scalasans-capsitalic-webfont.woff') format('woff');
-// 	font-weight: 400;
-// 	font-style:  italic;
-// }
 
 @font-face {
 	font-family: 'scala-sans';
@@ -492,83 +470,18 @@ summary {
     }
 
 	//Adjusts margins for print
+	// @page :left {
+	// 	margin: 15mm 25mm 15mm 10mm;
+	// }
+	// @page :right {
+	// 	margin: 15mm 10mm 15mm 25mm;
+	// }
 	@page :left {
-		margin: 15mm 25mm 15mm 10mm;
+		margin: 10mm;
 	}
 	@page :right {
-		margin: 15mm 10mm 15mm 25mm;
+		margin: 10mm;
 	}
-
-	// Loops through chapters and adds page numbers, chapter title and lastly chapter number 
-	// based on hardcoded chapter-number div
-	@for $i from 1 through $chapterLength {
-		
-		.section:nth-child(#{$chapterLength}n + #{$i}) {
-			page:chapter#{$i};
-		}
-
-		@page chapter#{$i} {
-			@right-top {
-				padding-top:#{$i * 0.25}cm;
-			}
-			@left-top{
-				padding-top:#{$i * 0.25}cm;
-			}
-		}
-
-		@page chapter#{$i}:left {
-			@bottom-left { 
-				content: counter(page); 
-				font-family: $font-sans;
-				font-weight: 400;
-				font-size: 10pt;
-				margin-left: 5mm;
-				margin-bottom: 5mm;
-			}
-
-			@left-top { 
-				content: element(chapterHeaderLeft);
-				padding-right: 1mm;
-			}
-
-			@bottom-right {
-				// content: 'Kapitel ' counter(chapter) ' · ' string(chapterName);
-				content: string(chapterName); 
-				font-family: $font-sans;
-				font-weight: 400;
-				font-size: 10pt;			  
-				margin-right: 5mm;
-				margin-bottom: 5mm;
-			}
-		}
-
-		@page chapter#{$i}:right {
-			@bottom-right {
-				content: counter(page);
-				font-family: $font-sans;
-				font-weight: 400;
-				font-size: 10pt;
-				margin-right: 5mm;
-				margin-bottom: 5mm;
-			}
-
-			@right-top { 
-				content: element(chapterHeaderRight);
-				padding-left: 1mm;
-			}
-
-			@bottom-left {
-				// content: 'Kapitel ' counter(chapter) ' · ' string(chapterName);
-				content: string(chapterName);
-				font-family: $font-sans;
-				font-weight: 400;
-				font-size: 10pt;
-				margin-left: 5mm;
-				margin-bottom: 5mm;
-			}
-		}
-	}
-
 
 	//Table of contents - Needs review
 	.table-of-contents {
