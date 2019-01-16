@@ -43,4 +43,3 @@
     </main>
 
 </body>
-<?php die(); ?>

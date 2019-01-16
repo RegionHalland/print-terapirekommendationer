@@ -45,7 +45,7 @@ class App
 	 */
 	public function createOptionsPage() 
 	{
-		$title = 'Skapa PDF (23)';
+		$title = 'Skapa PDF (24)';
 		$slug = 'print-terapirekommendationer';
 
 		// Add options page
