@@ -21,6 +21,8 @@ class App
 			'exclude' => array(8694)
 		]);
 		$this->foreword = get_post(8694);
+		$this->ssk = self::getSSK();
+
 
 		add_action( 'admin_enqueue_scripts', array($this, 'enqueue') );
 		add_action( 'admin_menu', array($this, 'createOptionsPage') );
@@ -89,22 +91,30 @@ class App
 			$intPagesize = $_POST['pagesize'];
 		}
 
-		// Throw error if there are no posts.
-		if (!isset($_POST['posts'])){
-			throw new \Exception('No posts selected');
+		// Set page type - default 1
+		if (!isset($_POST['pagetype'])){
+			$intPagetype = 1;
+		} else {
+			$intPagetype = $_POST['pagetype'];
 		}
 
-		$selectedChapters = $_POST['posts'];
-
-		$chapters = array();
-
-		foreach ($this->pages as $key => $value) {
-			if (in_array($value->ID, $selectedChapters)) {
-				array_push($chapters, $value);
+		if ($intPagetype == 1) {
+			if (!isset($_POST['posts'])){
+				throw new \Exception('No posts selected');
 			}
+			$selectedChapters = $_POST['posts'];
+			$chapters = array();
+			foreach ($this->pages as $key => $value) {
+				if (in_array($value->ID, $selectedChapters)) {
+					array_push($chapters, $value);
+				}
+			}
+			$rendered = self::getChaptersAsHtml($chapters, $intPagesize);
 		}
 
-		$rendered = self::getChaptersAsHtml($chapters, $intPagesize);
+		if ($intPagetype == 3) {
+			$rendered = self::getSskAsHtml($this->ssk);
+		}
 
  		$prince = new PrinceWrapper($this->princeBinary);
     	
@@ -136,6 +146,42 @@ class App
 		$rendered = $this->blade->view()->make('book.book-'.$intPagesize, ["chapters" => $chapters], ["foreword" => $this->foreword])->render();
 
 		return $rendered;
+	}
+
+	private function getSskAsHtml($chapters) {
+		
+
+		// Render all pages with correct size
+		$rendered = $this->blade->view()->make('book.book-reklistorSsk', ["chapters" => $chapters], ["foreword" => $this->foreword])->render();
+
+		return $rendered;
+	}
+
+	private function getSSK() {
+		
+		$myPostSsk = get_post(7783);
+		$arrPostsSsk = explode("BRYT", $myPostSsk->post_content);
+		$arrSsk = array();
+		foreach ($arrPostsSsk as $postSsk) {
+			$contentSsk['Rubrik'] = self::prepareRubrikSsk($postSsk);
+			$contentSsk['Content'] = self::prepareContentSsk($postSsk);
+			array_push($arrSsk, $contentSsk);
+		}
+        
+		return $arrSsk;
+	}
+
+	private function prepareContentSsk($content) {
+		
+		$strContent = str_replace("RUBRIKSTART","",$content);
+        $strContent = str_replace("RUBRIKSLUT","",$strContent);
+                    
+		return $strContent;
+	}
+
+	private function prepareRubrikSsk($content){
+		$strContent = preg_replace('/(.*)RUBRIKSTART(.*)RUBRIKSLUT(.*)/sm', '\2', $content);  
+		return $strContent;
 	}
 
 	/**
