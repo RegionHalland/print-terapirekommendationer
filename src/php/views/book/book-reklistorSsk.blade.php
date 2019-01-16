@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title></title>
-    <link rel="stylesheet" type="text/css" href="{{ PRINT_TR_PLUGIN_URL }}/dist/css/print_ssk_a6.min.css?ver=2.0">
+    <link rel="stylesheet" type="text/css" href="{{ PRINT_TR_PLUGIN_URL }}/dist/css/print_ssk_a6.min.css?ver=4.0">
 </head>
 <body>
     
@@ -13,7 +13,7 @@
 
     {{-- Foreword --}}
     <main class="main" role="main">
-        <div class="section"">
+        <div class="list"">
             <h1>{{$foreword->post_title}}</h1>
             {!! apply_filters('the_content', $foreword->post_content) !!}
         </div>
@@ -32,7 +32,7 @@
     <main class="main" role="main">
         {{-- Book --}}
         @foreach($chapters as $key => $chapter)
-            <div class="section" id="{{$key+1}}">
+            <div class="list" id="{{$key+1}}">
                 <h1>{{$chapter['Rubrik']}}</h1>
                 {!! apply_filters('the_content', $chapter['Content']) !!}
             </div>
