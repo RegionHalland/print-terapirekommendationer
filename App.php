@@ -113,6 +113,9 @@ class App
 		}
 
 		if ($intPagetype == 2) {
+			var_dump($intPagetype);
+			var_dump($this->rek);
+			die();
 			$rendered = self::getRekAsHtml($this->rek);
 		}
 
