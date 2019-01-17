@@ -24,7 +24,7 @@
     <h2 class="table-of-contents__header">Innehållsförteckning</h2>
     <ul class="table-of-contents">
         @foreach($chapters as $key => $chapter)
-            <li class="table-of-contents__chapter">{{$chapter['Rubrik']}}<a href="#{{$key+1}}"></a></li>
+            <li class="table-of-contents__chapter">{{$chapter->post_title}}<a href="#{{$key+1}}"></a></li>
         @endforeach
     </ul>
     {{-- Table of Contents END --}}
@@ -33,7 +33,7 @@
         {{-- Book --}}
         @foreach($chapters as $key => $chapter)
             <div class="list" id="{{$key+1}}">
-                {!! apply_filters('the_content', $chapter['Content']) !!}
+                {!! apply_filters('the_content', $chapter->post_content) !!}
             </div>
         @endforeach
         {{-- Book END --}}

@@ -22,6 +22,7 @@ class App
 		]);
 		$this->foreword = get_post(8694);
 		$this->ssk = self::getSSK();
+		$this->rek = self::getRek();
 
 		add_action( 'admin_enqueue_scripts', array($this, 'enqueue') );
 		add_action( 'admin_menu', array($this, 'createOptionsPage') );
@@ -44,7 +45,7 @@ class App
 	 */
 	public function createOptionsPage() 
 	{
-		$title = 'Skapa PDF (30)';
+		$title = 'Skapa PDF (31)';
 		$slug = 'print-terapirekommendationer';
 
 		// Add options page
@@ -111,6 +112,10 @@ class App
 			$rendered = self::getChaptersAsHtml($chapters, $intPagesize);
 		}
 
+		if ($intPagetype == 2) {
+			$rendered = self::getRekAsHtml($this->rek);
+		}
+
 		if ($intPagetype == 3) {
 			$rendered = self::getSskAsHtml($this->ssk);
 		}
@@ -132,7 +137,6 @@ class App
 	 */
 	private function getChaptersAsHtml($chapters, $intPagesize) {
 		
-		// Get all pages with children
 		foreach ($chapters as $key => $chapter) {
 			$chapters[$key]->children = get_pages([
 				'sort_order' => 'asc',
@@ -141,17 +145,7 @@ class App
 			]);
 		}
 
-		// Render all pages with correct size
 		$rendered = $this->blade->view()->make('book.book-'.$intPagesize, ["chapters" => $chapters], ["foreword" => $this->foreword])->render();
-
-		return $rendered;
-	}
-
-	private function getSskAsHtml($chapters) {
-		
-
-		// Render all pages with correct size
-		$rendered = $this->blade->view()->make('book.book-reklistorSsk', ["chapters" => $chapters], ["foreword" => $this->foreword])->render();
 
 		return $rendered;
 	}
@@ -170,6 +164,28 @@ class App
 		return $arrSsk;
 	}
 
+	private function getRek() {
+
+		global $wpdb;
+		$myPostRek = $wpdb->get_results( "SELECT R.post_title, P.post_content FROM wp_2_posts P INNER JOIN wp_2_posts R ON P.post_parent = R.ID WHERE P.post_name = 'rekommenderade-lakemedel' ORDER BY R.menu_order", ARRAY_A );
+
+		return $myPostRek;
+	}
+	
+	private function getRekAsHtml($chapters) {
+		
+		$rendered = $this->blade->view()->make('book.book-reklistor', ["chapters" => $chapters], ["foreword" => $this->foreword])->render();
+
+		return $rendered;
+	}
+	
+	private function getSskAsHtml($chapters) {
+		
+		$rendered = $this->blade->view()->make('book.book-reklistorSsk', ["chapters" => $chapters], ["foreword" => $this->foreword])->render();
+
+		return $rendered;
+	}
+
 	private function prepareContentSsk($content) {
 		
 		$strContent = str_replace("RUBRIKSTART","",$content);
@@ -179,7 +195,9 @@ class App
 	}
 
 	private function prepareRubrikSsk($content){
+		
 		$strContent = preg_replace('/(.*)RUBRIKSTART(.*)RUBRIKSLUT(.*)/sm', '\2', $content);  
+		
 		return $strContent;
 	}
 
