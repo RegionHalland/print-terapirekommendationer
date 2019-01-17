@@ -435,11 +435,6 @@ summary {
 		}
 	}
 
-	// Hide comments
-	.figurecomment {
-		display: none !important;
-	}
-
 	//Styles for chapter marker
     .chapter-header-left {
     	float: right;
@@ -653,45 +648,6 @@ summary {
 			color: #fff;
 		}
 	}
-	
-	.infobox--children {
-		font-family: $font-sans;
-		background: #faf5ea;
-		page-break-inside: avoid;
-	
-		.infobox__header {
-			background: #fdb813;      
-		}
-	}
-	
-	.infobox__header {
-		text-align: center;
-		text-transform: uppercase;
-		font-weight: 700;
-		font-family: $font-sans;
-		padding: 4pt;
-	}
-	
-	.infobox__content {
-		padding: $space-1;
-	}
-
-	// Utilities
-	.column-span-all  { column-span: all !important;  }
-	.column-span-none { column-span: none !important; }
-
-	@page rotate_body { 
-		prince-rotate-body: landscape;
-	}
-
-	.prince-rotate-body {
-		page: rotate_body;
-	}
-
-
-	.figurecomment { display: none !important; }
-	
-	.break-page { page-break-after: always !important; }	
 
 	.hide {
 		height: 0 !important;
@@ -699,25 +655,5 @@ summary {
 		position: absolute;
 		overflow: hide;
 		opacity: 0;
-	}
-}
-
-/* COMPONENTS */
-ul.segment {
-	list-style: none;
-	border:1px solid #eaeaea;
-	padding:0;
-	margin:0;
-	li:first-child{
-		font-family: $font-sans;
-		text-align: center;
-		background:$blue;
-		color:white;
-		text-transform: uppercase;
-		padding:20px;
-		margin:0;
-		font-size:14px;
-	}li{
-		padding-left: 20px;
 	}
 }
