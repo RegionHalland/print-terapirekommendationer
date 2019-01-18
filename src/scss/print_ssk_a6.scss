@@ -270,8 +270,7 @@ summary {
 	}
 
 	table {
-		// table-layout: auto;
-		// float: bottom;
+		
 		width: 100%;
 		box-sizing: border-box;
 		border-collapse: collapse;
@@ -311,16 +310,6 @@ summary {
 			}
 		}
 
-		img[src*="generiskt-utbyte.svg"],
-		img[src*="kommunalt_lakemedelsforrad.svg"] {
-			display: inline-block;
-			width:      12pt !important;
-			min-width:  12pt !important;
-			max-width:  12pt !important;
-			height:     7pt !important;
-			min-height: 7pt !important;
-			max-height: 7pt !important;
-		}
 	}
 
 	thead,
