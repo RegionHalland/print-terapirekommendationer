@@ -14,8 +14,5 @@
 	A4 <input type="radio" name="pagesize" value="4" checked>&nbsp;&nbsp;
 	A5 <input type="radio" name="pagesize" value="5">&nbsp;&nbsp;
 	A6 <input type="radio" name="pagesize" value="6"><br><br> 
-	Normal <input type="radio" name="pagetype" value="1" checked>&nbsp;&nbsp;
-	För läkare <input type="radio" name="pagetype" value="2">&nbsp;&nbsp;
-	För sjuksköterskor <input type="radio" name="pagetype" value="3"> 
 	{{ submit_button( 'Ladda ner PDF' ) }}
 </form>

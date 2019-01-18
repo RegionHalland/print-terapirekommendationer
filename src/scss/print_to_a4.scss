@@ -642,18 +642,11 @@ summary {
 		page-break-inside: avoid;
 		padding: $space-pt-2 $space-pt-2 $space-pt-1;
 		margin-bottom: $space-pt-1;
-
+		background: #ddeef9;
+	
 		p, h4, h5, h6 {
 			margin-top: 0;
 		}
-	}
-
-	.infobox--background {
-		background: #ddeef9;
-	}
-
-	.infobox--border {
-		border: 2pt solid #00579d;
 	}
 
 	.infobox--elderly {
