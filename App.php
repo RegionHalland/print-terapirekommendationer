@@ -45,7 +45,7 @@ class App
 	 */
 	public function createOptionsPage() 
 	{
-		$title = 'Skapa PDF (44)';
+		$title = 'Skapa PDF (45';
 		$slug = 'print-terapirekommendationer';
 
 		// Add options page
@@ -113,9 +113,6 @@ class App
 		}
 
 		if ($intPagetype == 2) {
-			var_dump($intPagetype);
-			var_dump($this->rek);
-			die();
 			$rendered = self::getRekAsHtml($this->rek);
 		}
 

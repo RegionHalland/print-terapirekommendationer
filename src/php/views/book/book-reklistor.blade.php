@@ -3,22 +3,25 @@
 <head>
     <meta charset="utf-8">
     <title></title>
-    <link rel="stylesheet" type="text/css" href="{{ PRINT_TR_PLUGIN_URL }}/dist/css/print_ssk_a6.min.css?ver=7.0">
+    <link rel="stylesheet" type="text/css" href="{{ PRINT_TR_PLUGIN_URL }}/dist/css/print_ssk_a6.min.css?ver=9.0">
 </head>
 <body>
     
-    {{-- Cover Page (Empty) --}}
-    <div class="cover-page"></div>
-    {{-- Cover Page (Empty) END --}}
+    {{-- Empty Page --}}
+    <div class="list"></div>
+    {{-- Empty Page END --}}
 
-    {{-- Foreword --}}
-    <main class="main" role="main">
-        <div class="list"">
-            <h1>{{$foreword->post_title}}</h1>
-            {!! apply_filters('the_content', $foreword->post_content) !!}
-        </div>
-    </main>
-    {{-- Foreword END --}}
+    {{-- Empty Page --}}
+    <div class="list"></div>
+    {{-- Empty Page END --}}
+    
+    {{-- Empty Page --}}
+    <div class="list"></div>
+    {{-- Empty Page END --}}
+    
+    {{-- Empty Page --}}
+    <div class="list"></div>
+    {{-- Empty Page END --}}
     
     {{-- Table of Contents --}}
     <h2 class="table-of-contents__header">Innehållsförteckning</h2>
@@ -32,7 +35,8 @@
     <main class="main" role="main">
         {{-- Book --}}
         @foreach($chapters as $key => $chapter)
-            <div class="list" id="{{$key+1}}">
+            <div class="section" id="{{$key+1}}">
+                <h1 class="hide">{{$chapter->post_title}}</h1>
                 {!! apply_filters('the_content', $chapter->post_content) !!}
             </div>
         @endforeach
