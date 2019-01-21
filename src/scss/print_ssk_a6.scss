@@ -414,51 +414,7 @@ summary {
 	//Increments chapter for every chapter section <div class="section"> in document and fetches chapter name from PrinceXML's string-set function
 	.section {
 		counter-increment: chapter;
-		h1 {
-			string-set: chapterName content();
-			// &::before {
-			// 	content: 'Kapitel ' counter(chapter) ' · '; 
-			// } 
-		}
 	}
-
-	//Styles for chapter marker
-    .chapter-header-left {
-    	float: right;
-    	box-sizing: border-box;
-        flow: static(chapterHeaderLeft);
-        content: counter(chapter);
-        font-size: 12pt;
-        font-family: $font-sans;
-        text-align: right;
-        padding-top: 6pt;
-        padding-bottom: 6pt;
-       	padding-right: 2.25mm;
-        padding-left: 10mm;
-        margin-right: 1mm;
-        font-weight: bold;
-        color: white;
-        background-color: $blue;
-
-    }
-
-    .chapter-header-right {
-    	float: left;
-    	box-sizing: border-box;
-        flow: static(chapterHeaderRight);
-        content: counter(chapter); 
-        font-size: 12pt;
-        font-family: $font-sans;
-        text-align: left;
-        padding-top: 6pt;
-        padding-bottom: 6pt;
-       	padding-left: 2.25mm;
-        padding-right: 10mm;
-        margin-left: 1mm;
-        font-weight: bold;
-        color: white;
-        background-color: $blue;
-    }
 
 	//Adjusts margins for print
 	@page :left {
@@ -476,16 +432,8 @@ summary {
 			page:chapter#{$i};
 		}
 
-		@page chapter#{$i} {
-			@right-top {
-				padding-top:#{$i * 0.25}cm;
-			}
-			@left-top{
-				padding-top:#{$i * 0.25}cm;
-			}
-		}
-
 		@page chapter#{$i}:left {
+			
 			@bottom-left { 
 				content: counter(page); 
 				font-family: $font-sans;
@@ -493,11 +441,6 @@ summary {
 				font-size: 10pt;
 				margin-left: 5mm;
 				margin-bottom: 5mm;
-			}
-
-			@left-top { 
-				content: element(chapterHeaderLeft);
-				padding-right: 1mm;
 			}
 
 			@bottom-right {
@@ -519,11 +462,6 @@ summary {
 				font-size: 10pt;
 				margin-right: 5mm;
 				margin-bottom: 5mm;
-			}
-
-			@right-top { 
-				content: element(chapterHeaderRight);
-				padding-left: 1mm;
 			}
 
 			@bottom-left {
