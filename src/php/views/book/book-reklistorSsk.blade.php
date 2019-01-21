@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title></title>
-    <link rel="stylesheet" type="text/css" href="{{ PRINT_TR_PLUGIN_URL }}/dist/css/print_ssk_a6.min.css?ver=9.0">
+    <link rel="stylesheet" type="text/css" href="{{ PRINT_TR_PLUGIN_URL }}/dist/css/print_reklistor_a6.min.css?ver=1.0">
 </head>
 <body>
     
