@@ -45,7 +45,7 @@ class App
 	 */
 	public function createOptionsPage() 
 	{
-		$title = 'Skapa PDF (47)';
+		$title = 'Skapa PDF (48)';
 		$slug = 'print-terapirekommendationer';
 
 		// Add options page
@@ -168,8 +168,15 @@ class App
 
 		global $wpdb;
 		$myPostRek = $wpdb->get_results( "SELECT R.post_title, P.post_content FROM wp_2_posts P INNER JOIN wp_2_posts R ON P.post_parent = R.ID WHERE P.post_name = 'rekommenderade-lakemedel' ORDER BY R.menu_order", ARRAY_A );
-
-		return $myPostRek;
+		
+		$arrRek = array();
+		foreach ($myPostRek as $postRek) {
+			$contentRek['Rubrik'] = $postRek['post_title'];
+			$contentRek['Content'] = str_replace("rekommenderade läkemedel",$postRek['post_title'],$postRek['post_content']);
+			array_push($arrRek, $contentRek);
+		}
+		
+		return $arrRek;
 	}
 	
 	private function getRekAsHtml($chapters) {
