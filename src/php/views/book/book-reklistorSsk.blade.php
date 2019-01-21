@@ -33,7 +33,7 @@
         {{-- Book --}}
         @foreach($chapters as $key => $chapter)
             <div class="section" id="{{$key+1}}">
-                <h2 class="hide">{{$chapter['Rubrik']}}</h2>
+                <h1>{{$chapter['Rubrik']}}</h2>
                 {!! apply_filters('the_content', $chapter['Content']) !!}
             </div>
         @endforeach
