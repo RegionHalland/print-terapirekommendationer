@@ -7,18 +7,21 @@
 </head>
 <body>
     
-    {{-- Cover Page (Empty) --}}
-    <div class="cover-page"></div>
-    {{-- Cover Page (Empty) END --}}
+    {{-- Empty Page --}}
+    <div class="list"></div>
+    {{-- Empty Page END --}}
 
-    {{-- Foreword --}}
-    <main class="main" role="main">
-        <div class="section"">
-            <h1>{{$foreword->post_title}}</h1>
-            {!! apply_filters('the_content', $foreword->post_content) !!}
-        </div>
-    </main>
-    {{-- Foreword END --}}
+    {{-- Empty Page --}}
+    <div class="list"></div>
+    {{-- Empty Page END --}}
+    
+    {{-- Empty Page --}}
+    <div class="list"></div>
+    {{-- Empty Page END --}}
+    
+    {{-- Empty Page --}}
+    <div class="list"></div>
+    {{-- Empty Page END --}}
     
     {{-- Table of Contents --}}
     <h2 class="table-of-contents__header">Innehållsförteckning</h2>
