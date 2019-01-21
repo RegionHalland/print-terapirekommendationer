@@ -13,7 +13,7 @@
 
     {{-- Foreword --}}
     <main class="main" role="main">
-        <div class="list"">
+        <div class="section"">
             <h1>{{$foreword->post_title}}</h1>
             {!! apply_filters('the_content', $foreword->post_content) !!}
         </div>
@@ -33,6 +33,7 @@
         {{-- Book --}}
         @foreach($chapters as $key => $chapter)
             <div class="section" id="{{$key+1}}">
+                <h2 class="hide">{{$chapter['Rubrik']}}</h2>
                 {!! apply_filters('the_content', $chapter['Content']) !!}
             </div>
         @endforeach
