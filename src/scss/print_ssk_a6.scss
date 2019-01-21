@@ -414,6 +414,9 @@ summary {
 	//Increments chapter for every chapter section <div class="section"> in document and fetches chapter name from PrinceXML's string-set function
 	.section {
 		counter-increment: chapter;
+		h1 {
+			string-set: chapterName content();
+		}
 	}
 
 	//Adjusts margins for print

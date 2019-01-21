@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title></title>
-    <link rel="stylesheet" type="text/css" href="{{ PRINT_TR_PLUGIN_URL }}/dist/css/print_ssk_a6.min.css?ver=8.0">
+    <link rel="stylesheet" type="text/css" href="{{ PRINT_TR_PLUGIN_URL }}/dist/css/print_ssk_a6.min.css?ver=9.0">
 </head>
 <body>
     
@@ -33,7 +33,7 @@
         {{-- Book --}}
         @foreach($chapters as $key => $chapter)
             <div class="section" id="{{$key+1}}">
-                <h1>{{$chapter['Rubrik']}}</h2>
+                <h1 class="hide">{{$chapter['Rubrik']}}</h1>
                 {!! apply_filters('the_content', $chapter['Content']) !!}
             </div>
         @endforeach
