@@ -45,7 +45,7 @@ class App
 	 */
 	public function createOptionsPage() 
 	{
-		$title = 'Skapa PDF (50)';
+		$title = 'Skapa PDF (51)';
 		$slug = 'print-terapirekommendationer';
 
 		// Add options page
@@ -172,7 +172,7 @@ class App
 		$arrRek = array();
 		foreach ($myPostRek as $postRek) {
 			$contentRek['Rubrik'] = $postRek['post_title'];
-			$contentRek['Content'] = str_replace("rekommenderade läkemedel",$postRek['post_title'],$postRek['post_content']);
+			$contentRek['Content'] = self::prepareContentRek($postRek['post_title'], $postRek['post_content']);
 			array_push($arrRek, $contentRek);
 		}
 		
@@ -198,6 +198,15 @@ class App
 		$strContent = str_replace("RUBRIKSTART","",$content);
         $strContent = str_replace("RUBRIKSLUT","",$strContent);
                     
+		return $strContent;
+	}
+
+	private function prepareContentRek($postTitle, $postContent) {
+
+		$strContent = $postContent;
+		$strContent = str_replace("rekommenderade läkemedel",$postTitle,$postContent);
+		$strContent = str_replace("rekommenderade produkter",$postTitle,$postContent);
+
 		return $strContent;
 	}
 
