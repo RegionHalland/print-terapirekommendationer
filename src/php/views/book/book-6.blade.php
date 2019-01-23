@@ -14,7 +14,7 @@
     {{-- Foreword --}}
     <main class="main" role="main">
         <div class="section"">
-            <h1>{{$foreword->post_title}}</h1>
+            <h2>{{$foreword->post_title}}</h2>
             {!! apply_filters('the_content', $foreword->post_content) !!}
         </div>
     </main>
