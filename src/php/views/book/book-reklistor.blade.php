@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title></title>
-    <link rel="stylesheet" type="text/css" href="{{ PRINT_TR_PLUGIN_URL }}/dist/css/print_reklistor_a6.min.css?ver=2.0">
+    <link rel="stylesheet" type="text/css" href="{{ PRINT_TR_PLUGIN_URL }}/dist/css/print_reklistor_a6.min.css?ver=3.0">
 </head>
 <body>
     
@@ -11,10 +11,6 @@
     <div class="list"></div>
     {{-- Empty Page END --}}
 
-    {{-- Empty Page --}}
-    <div class="list"></div>
-    {{-- Empty Page END --}}
-    
     {{-- Empty Page --}}
     <div class="list"></div>
     {{-- Empty Page END --}}
