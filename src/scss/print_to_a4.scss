@@ -633,8 +633,20 @@ summary {
 		background: #eaeaea;
 	}
 
-	// Infoboxes
-	.infobox--background,
+	.infobox--background {
+		font-family: $font-sans;
+		display: inline-block;
+		width: 100%;
+		page-break-inside: avoid;
+		padding: $space-pt-2 $space-pt-2 $space-pt-1;
+		margin-bottom: $space-pt-1;
+		background: #ddeef9;
+	
+		p, h4, h5, h6 {
+			margin-top: 0;
+		}
+	}
+
 	.infobox--border {
 		font-family: $font-sans;
 		display: inline-block;
