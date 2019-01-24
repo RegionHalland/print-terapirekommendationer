@@ -45,7 +45,7 @@ class App
 	 */
 	public function createOptionsPage() 
 	{
-		$title = 'Skapa PDF (55)';
+		$title = 'Skapa PDF (56)';
 		$slug = 'print-terapirekommendationer';
 
 		// Add options page
@@ -84,13 +84,8 @@ class App
 			throw new \Exception('Could not find Prince binary. Make sure you installed it on the server. https://www.princexml.com/doc-install/#linux');
 		}
 
-		// Set size of page - default A4
-		if (!isset($_POST['pagesize'])){
-			$intPagesize = 4;
-		} else {
-			$intPagesize = $_POST['pagesize'];
-		}
-
+		$intPagesize = 4;
+		
 		// Set page type - default 1
 		if (!isset($_POST['pagetype'])){
 			$intPagetype = 1;

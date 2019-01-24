@@ -11,9 +11,8 @@
 		@each('tree-child-list', $tree, 'item')
 	</ul>
 	@endif
-	<input type="hidden" name="pagesize" value="4">
-	Standard A4 <input type="radio" name="pagetype" value="1" checked>&nbsp;&nbsp;
-	För läkare <input type="radio" name="pagetype" value="2">&nbsp;&nbsp;
-	För sjuksköterskor <input type="radio" name="pagetype" value="3"> 
+	Normal A4 <input type="radio" name="pagetype" value="1" checked>&nbsp;&nbsp;
+	A6 för läkare <input type="radio" name="pagetype" value="2">&nbsp;&nbsp;
+	A6 för sjuksköterskor <input type="radio" name="pagetype" value="3"> 
 	{{ submit_button( 'Ladda ner PDF' ) }}
 </form>
