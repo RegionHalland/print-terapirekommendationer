@@ -45,7 +45,7 @@ class App
 	 */
 	public function createOptionsPage() 
 	{
-		$title = 'Skapa PDF (52)';
+		$title = 'Skapa PDF (53)';
 		$slug = 'print-terapirekommendationer';
 
 		// Add options page
@@ -204,8 +204,8 @@ class App
 	private function prepareContentRek($postTitle, $postContent) {
 
 		$strContent = $postContent;
-		$strContent = str_replace("rekommenderade läkemedel",$postTitle,$postContent);
-		$strContent = str_replace("rekommenderade produkter",$postTitle,$postContent);
+		$strContent = str_replace("rekommenderade läkemedel",$postTitle,$strContent);
+		$strContent = str_replace("rekommenderade produkter",$postTitle,$strContent);
 
 		return $strContent;
 	}
